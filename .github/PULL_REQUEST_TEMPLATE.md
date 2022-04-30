@@ -1,13 +1,10 @@
-## Issue
--
+Switch to the `Preview` mode and **choose** a `PR template`.
 
-## Overview (Required)
--
+Read the [Contribution guideline](https://github.com/cam-inc/viron/blob/develop/CONTRIBUTING.md).
 
-## Links
--
+- [General](?expand=1&template=general.md) to create any kind of PRs except for versioning.
+- [Version](?expand=1&template=version.md) to set new version for packages.
 
-## Screenshot
-Before | After
-:--: | :--:
-<img src="" width="300" /> | <img src="" width="300" />
+---
+
+NOTE: This is a workaround for [this](https://github.community/t/is-there-a-pull-request-template-selector-similar-to-issues/171838/8)

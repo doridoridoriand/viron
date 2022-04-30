@@ -1,45 +1,105 @@
-![VIRON](./art/banner.png)
+<div align="center">
+  <img src="./arts/title.png" style="width:50%;" />
+</div>
 
-<h2 align="center">Automated Design-based Management Console</h2>
-
-All you do is just create a API server and a OAS2.0 json file. Then viron admin tool is ready to use.
-You don't need to write frontend code!
+<h2 align="center">OAS-driven Frontend-NoCode Administration Console</h2>
 
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-[![Read the Docs](https://img.shields.io/readthedocs/pip.svg)](https://cam-inc.github.io/viron-doc/)
-[![GitHub release](https://img.shields.io/github/release/cam-inc/viron.svg)]()
+[![Read the Docs](https://img.shields.io/readthedocs/pip.svg)](https://discovery.viron.plus/docs/introduction/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/cam-inc/viron.svg)]()
 
-## 🔎 Official Website(📙 Documentation, Quick Start, Demo Site)
+<div align="center">
+  <img src="./arts/responsive/desktop.png" align="top" style="width:70%;" />
+  <img src="./arts/responsive/mobile.png" align="top" style="width:25%;" />
+</div>
 
-[https://cam-inc.github.io/viron-doc/](https://cam-inc.github.io/viron-doc/)
+<br />
 
-## 🚅 Ecosystem
+<div align="center">
+  <img src="./arts/ui/nav.png" align="top" style="width:15%;" />
+  <img src="./arts/ui/form.png" align="top" style="width:25%;" />
+  <img src="./arts/ui/modal.png" align="top" style="width:20%;" />
+</div>
 
-### Libraries / Frameworks
 
-| Project | Type | Description |
-|---------|--------|-------------|
-| [node-vironlib](https://github.com/cam-inc/node-vironlib) | API Server Helper (NodeJS) | node-vironlib is a helper library that makes it easy to implement functions that would normally be needed with Viron API Server. |
+<br />
 
-## Development Guide for "Viron" Contributors
+<div align="center">
+  <img src="./arts/ui/table.png" align="top" style="width:50%;" />
+</div>
 
-["Viron" Contributors Documentation](https://github.com/cam-inc/viron/wiki/BASIC)
+<br />
+
+<div align="center">
+  <img src="./arts/ui/app_bar.png" align="top" style="width:30%;" />
+  <img src="./arts/ui/endpoint_card.png" align="top" style="width:30%;" />
+  <img src="./arts/ui/info.png" align="top" style="width:30%;" />
+</div>
+
+<br />
+
+<div align="center">
+  <img src="./arts/theme/c_1.png" align="top" style="width:15%;" />
+  <img src="./arts/theme/c_2.png" align="top" style="width:15%;" />
+  <img src="./arts/theme/c_3.png" align="top" style="width:15%;" />
+  <img src="./arts/theme/c_4.png" align="top" style="width:15%;" />
+  <img src="./arts/theme/c_5.png" align="top" style="width:15%;" />
+</div>
+
+<br />
+
+<div align="center">
+  <img src="./arts/theme/p_1.png" align="top" width="40%"/>
+  <img src="./arts/theme/p_2.png" align="top" width="40%"/>
+  <img src="./arts/theme/p_3.png" align="top" width="40%"/>
+  <img src="./arts/theme/p_4.png" align="top" width="40%"/>
+  <img src="./arts/theme/p_5.png" align="top" width="40%"/>
+  <img src="./arts/theme/p_6.png" align="top" width="40%"/>
+</div>
+
+
+## What is Viron
+
+Viron is a **web-based** administration tool, which
+
+- is based on and leverages **[OpenAPI Specification](https://oai.github.io/Documentation/)**,
+- offers **Frontend-Node** console with **fine-tuned GUI**,
+- and is an **Open-Source Software**.
+
+Viron enables you to eliminate all the Frontend-matter tasks when administrating your API servers.
+
+## The Idea
+
+OpenAPI Specification, a.k.a. `OAS`, is a `YAML` or `JSON` file that defines an interface to a set of **RESTful** APIs. By interpreting an OAS document, the readers understand things such as:
+
+- The overall idea for the APIs.
+- How to call a particular API.
+- How to construct request payloads.
+- What type of schema do the APIs return.
+- The ways to authenticate.
+- And much more.
+
+Viron evaluates and leverages OAS documents, interprets those above, and then constructs a **GUI** for you.
+
+## Viron is For Those Who:
+
+- have a `RESTful` administration API server.
+- do not have time to make an administration website `from scratch`.
+- have good knowledge of OpenAPI Specification.
+
+## Viron is NOT For Those Who:
+
+- require a complex administration website that an OAS document `can not define`.
+- have a GraphQL administration API server.
+
+## Code of Conduct
+
+[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
+
+## License
+
+[MIT LICENSE](./LICENSE)
 
 ## Changelog
 
-Detailed changes for each release are documented in the [release notes](https://github.com/cam-inc/viron/releases).
-
-## Contributors
-
-| [<img src="https://avatars1.githubusercontent.com/u/381941?s=130&v=4" width="130px;"/><br />fkei](https://github.com/fkei) <br /> 🤔 💻  | [<img src="https://avatars0.githubusercontent.com/u/10769038?s=130&v=4" width="130px;"/><br />cathcheeno](https://github.com/cathcheeno)<br /> 💻  | [<img src="https://avatars2.githubusercontent.com/u/2404059?s=130&v=4" width="130px;"/><br />noritama](https://github.com/noritama)<br /> 💻  | [<img src="https://avatars1.githubusercontent.com/u/35751869?s=130&v=4" width="130px;"/><br />babarl](https://github.com/babarl)<br /> 🎨 | [<img src="https://avatars2.githubusercontent.com/u/3895795?s= 130&v=4" width="130px;"/><br />MuuKojima](https://github.com/MuuKojima)<br /> 💻  | [<img src="https://avatars2.githubusercontent.com/u/12236042?s=130&v=4" width="130px;"/><br />tosaka07](https://github.com/tosaka07)<br /> 💻  | [<img src="https://avatars0.githubusercontent.com/u/11499282?s=130&v=4" width="130px;"/><br />Jung0](https://github.com/Jung0)<br /> 💻  |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---:
-[<img src="https://avatars1.githubusercontent.com/u/26865061?s=130&v=4" width="130px;"/><br />Takahisa<br />Kodama](https://github.com/TakahisaKodama)<br /> 💻  |
-
-## Copyright
-
-CA Mobile, Inc. All rights reserved.
-
-## LICENSE
-
-MIT LICENSE [LICENSE](LICENSE)
+[Changelog](https://discovery.viron.plus/docs/References/changelog/)

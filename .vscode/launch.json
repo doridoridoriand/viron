@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "name": "[viron/example/nodejs] Run Jest on example/nodejs",
+      "request": "launch",
+      "program": "${workspaceFolder}/example/nodejs/node_modules/jest/bin/jest",
+      "args": [
+        "--runInBand"
+      ],
+      "cwd": "${workspaceFolder}/example/nodejs",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "[viron/example/nodejs] Attach node-inspector to example/nodejs",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/example/nodejs",
+      "remoteRoot": "/example/nodejs",
+      "protocol": "inspector",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+    },
+  ]
+}

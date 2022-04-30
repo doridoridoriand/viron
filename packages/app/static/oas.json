@@ -1,0 +1,1110 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Viron Mock",
+    "version": "mock",
+    "description": "# heading 1 \n ## heading 2",
+    "termsOfService": "https://TODO.viron.app/",
+    "contact": {
+      "name": "Viron",
+      "url": "https://TODO.viron.app/",
+      "email": "TODO@viron.app"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://TODO.viron.app/"
+    },
+    "x-thumbnail": "https://st0.fensi.plus/ui/common/favicon/owner/favicon-96x96.png",
+    "x-theme": "ultimate orange",
+    "x-tags": ["tagA", "tagB", "tagC"],
+    "x-number": {
+      "responseKey": "value"
+    },
+    "x-table": {
+      "responseListKey": "list",
+      "pager": {
+        "requestPageKey": "page",
+        "requestSizeKey": "size",
+        "responseMaxpageKey": "maxpage",
+        "responsePageKey": "page"
+      },
+      "sort": {
+        "requestKey": "sort"
+      }
+    },
+    "x-autocomplete": {
+      "responseLabelKey": "label",
+      "responseValueKey": "value"
+    },
+    "x-pages": [
+      {
+        "id": "types",
+        "title": "All Content Types",
+        "description": "# heading 1 \n ## heading 2",
+        "contents": [
+          {
+            "title": "Type of Table",
+            "type": "table",
+            "operationId": "get:/types/table"
+          },
+          {
+            "title": "Type of Number",
+            "type": "number",
+            "operationId": "get:/types/number"
+          }
+        ]
+      },
+      {
+        "id": "allOf",
+        "title": "allOf merging",
+        "description": "# heading 1 \n ## heading 2",
+        "contents": [
+          {
+            "title": "Shops",
+            "type": "table",
+            "operationId": "get:/shops"
+          }
+        ]
+      },
+      {
+        "id": "pathItem",
+        "title": "PathItem全般",
+        "description": "# heading 1 \n ## heading 2",
+        "contents": [
+          {
+            "title": "PathItem",
+            "type": "number",
+            "operationId": "get:/pathItem"
+          }
+        ]
+      },
+      {
+        "id": "operation",
+        "title": "Operation全般",
+        "description": "# heading 1 \n ## heading 2",
+        "contents": [
+          {
+            "title": "Operation",
+            "type": "number",
+            "operationId": "get:/operation"
+          }
+        ]
+      },
+      {
+        "id": "siblings",
+        "title": "Siblings全般",
+        "contents": [
+          {
+            "title": "Type of Number",
+            "type": "number",
+            "operationId": "get:/siblings/number",
+            "actions": [
+              {
+                "operationId": "get:/actions/csv"
+              },
+              {
+                "operationId": "get:/actions/csv/{userId}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "descentends",
+        "title": "Descendants全般",
+        "contents": [
+          {
+            "title": "Type of Table",
+            "type": "table",
+            "operationId": "get:/descendants/table",
+            "actions": [
+              {
+                "operationId": "get:/actions/csv"
+              },
+              {
+                "operationId": "get:/actions/csv/{userId}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "fileUploads",
+        "title": "File Uploads全般",
+        "contents": [
+          {
+            "title": "File Upload",
+            "type": "number",
+            "operationId": "get:/fileUploads/number"
+          }
+        ]
+      },
+      {
+        "id": "request",
+        "title": "request",
+        "contents": [
+          {
+            "title": "Complicated Request",
+            "type": "number",
+            "operationId": "get:/request",
+            "actions": [
+              {
+                "operationId": "get:/request/{pathParameterA}/{pathParameterB}"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "grouping",
+        "title": "Grouping",
+        "group": "one/two/three/four/five",
+        "contents": []
+      }
+    ]
+  },
+  "paths": {
+    "/types/table": {
+      "get": {
+        "operationId": "get:/types/table",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PagerPage"
+          },
+          {
+            "$ref": "#/components/parameters/PagerSize"
+          },
+          {
+            "$ref": "#/components/parameters/Sort"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userId": {
+                            "$ref": "#/components/schemas/UserId"
+                          }
+                        }
+                      }
+                    },
+                    "page": {
+                      "$ref": "#/components/schemas/PagerPage"
+                    },
+                    "maxpage": {
+                      "$ref": "#/components/schemas/PagerMaxpage"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/types/number": {
+      "get": {
+        "operationId": "get:/types/number",
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shops": {
+      "description": "summary string.",
+      "get": {
+        "operationId": "get:/shops",
+        "responses": {
+          "200": {
+            "description": "allOf merging ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShopList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pathItem": {
+      "summary": "summary string.",
+      "description": "# heading 1 \n ## heading 2",
+      "servers": [
+        {
+          "url": "https://TODO.viron.app/",
+          "description": "sample one"
+        },
+        {
+          "url": "https://TODO.viron.app/",
+          "description": "sample two"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "userId",
+          "in": "query",
+          "schema": {
+            "$ref": "#/components/schemas/UserId"
+          }
+        },
+        {
+          "name": "userName",
+          "in": "query",
+          "schema": {
+            "$ref": "#/components/schemas/UserName"
+          }
+        }
+      ],
+      "get": {
+        "operationId": "get:/pathItem",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "共通parametersが含まれているか",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/operation": {
+      "get": {
+        "tags": ["A", "B", "C"],
+        "summary": "A short summary of what the operation does.",
+        "description": "# heading 1 \n ## heading 2",
+        "externalDocs": {
+          "url": "https://TODO.viron.app/",
+          "description": "description"
+        },
+        "operationId": "get:/operation",
+        "responses": {
+          "default": {
+            "$ref": "#/components/responses/Empty"
+          }
+        },
+        "deprecated": true,
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "servers": [
+          {
+            "url": "https://TODO.viron.app/",
+            "description": "sample one"
+          },
+          {
+            "url": "https://TODO.viron.app/",
+            "description": "sample two"
+          }
+        ]
+      }
+    },
+    "/siblings/number": {
+      "get": {
+        "operationId": "get:/siblings/number",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Number"
+          }
+        }
+      },
+      "put": {
+        "operationId": "put:/siblings/number",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "post": {
+        "operationId": "post:/siblings/number",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete:/siblings/number",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "options": {
+        "operationId": "options:/siblings/number",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "head": {
+        "operationId": "head:/siblings/number",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "patch:/siblings/number",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "trace": {
+        "operationId": "trace:/siblings/number",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      }
+    },
+    "/descendants/table": {
+      "get": {
+        "operationId": "get:/descendants/table",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Table"
+          }
+        }
+      }
+    },
+    "/descendants/table/xxx": {
+      "get": {
+        "operationId": "get:/descendants/table/xxx",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "put": {
+        "operationId": "put:/descendants/table/xxx",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "post": {
+        "operationId": "post:/descendants/table/xxx",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delete:/descendants/table/xxx",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "options": {
+        "operationId": "options:/descendants/table/xxx",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "head": {
+        "operationId": "head:/descendants/table/xxx",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "patch:/descendants/table/xxx",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      },
+      "trace": {
+        "operationId": "trace:/descendants/table/xxx",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      }
+    },
+    "/fileUploads/number": {
+      "get": {
+        "operationId": "get:/fileUploads/number",
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "post:fileUploads",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "BASE64": {
+                    "type": "string",
+                    "format": "base64"
+                  },
+                  "BINARY": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": ["BINARY"]
+              },
+              "encoding": {
+                "id": {
+                },
+                "BASE64": {
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/actions/csv": {
+      "get": {
+        "operationId": "get:/actions/csv",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      }
+    },
+    "/actions/csv/{userId}": {
+      "get": {
+        "operationId": "get:/actions/csv/{userId}",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        }
+      }
+    },
+    "/request": {
+      "get": {
+        "operationId": "get:/request",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        },
+        "tags": ["A", "B", "C"],
+        "summary": "A short summary of what the operation does.",
+        "description": "# heading 1 \n ## heading 2",
+        "externalDocs": {
+          "url": "https://TODO.viron.app/",
+          "description": "description"
+        },
+        "deprecated": true,
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "servers": [
+          {
+            "url": "https://TODO.viron.app/",
+            "description": "sample one"
+          },
+          {
+            "url": "https://TODO.viron.app/",
+            "description": "sample two"
+          }
+        ]
+      }
+    },
+    "/request/{pathParameterA}/{pathParameterB}": {
+      "get": {
+        "operationId": "get:/request/{pathParameterA}/{pathParameterB}",
+        "parameters": [
+          {
+            "name": "pathParameterA",
+            "in": "path",
+            "description": "# heading 1 \n ## heading 2",
+            "required": true,
+            "deprecated": true,
+            "schema": {
+              "type": "string",
+              "title": "path a",
+              "description": "説明文。"
+            }
+          },
+          {
+            "name": "pathParameterB",
+            "in": "path",
+            "description": "# heading 1 \n ## heading 2",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "MULTIPLE_OF": {
+                    "type": "integer",
+                    "multipleOf": 5
+                  },
+                  "MAXIMUM": {
+                    "type": "integer",
+                    "maximum": 5
+                  },
+                  "EXCLUSIVE_MAXIMUM": {
+                    "type": "integer",
+                    "maximum": 5,
+                    "exclusiveMaximum": true
+                  },
+                  "MINIMUM": {
+                    "type": "integer",
+                    "minimum": 5
+                  },
+                  "EXCLUSIVE_MINIMUM": {
+                    "type": "integer",
+                    "minimum": 5,
+                    "exclusiveMinimum": true
+                  },
+                  "MAX_LENGTH": {
+                    "type": "string",
+                    "maxLength": 5
+                  },
+                  "MIN_LENGTH": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "MAX_ITEMS": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 2
+                  },
+                  "MIN_ITEMS": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 2
+                  },
+                  "UNIQUE_ITEMS": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "uniqueItems": true
+                  },
+                  "ANY_OF": {
+                    "type": "array",
+                    "anyOf": [
+
+                    ]
+                  },
+                  "ONE_OF": {
+                    "type": "array",
+                    "oneOf": [
+
+                    ]
+                  },
+                  "MAX_PROPERTIES": {
+                    "type": "object",
+                    "properties": {
+                      "one": {
+                        "type": "string"
+                      }
+                    },
+                    "maxProperties": 2
+                  },
+                  "MIN_PROPERTIES": {
+                    "type": "object",
+                    "properties": {
+                      "one": {
+                        "type": "string"
+                      }
+                    },
+                    "minProperties": 2
+                  },
+                  "REQUIRED": {
+                    "type": "object",
+                    "properties": {
+                      "one": {
+                        "type": "string"
+                      },
+                      "two": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["one", "two", "three"]
+                  },
+                  "ADDITIONAL_PROPERTIES": {
+                    "type": "object",
+                    "properties": {
+                      "one": {
+                        "type": "string"
+                      },
+                      "two": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "ENUM": {
+                    "type": "string",
+                    "enum": ["ONE", "TWO"]
+                  },
+                  "NUMBER": {
+                    "type": "number"
+                  },
+                  "INTEGER": {
+                    "type": "integer"
+                  },
+                  "STRING": {
+                    "type": "string"
+                  },
+                  "BOOLEAN": {
+                    "type": "boolean"
+                  },
+                  "AUTOCOMPLETE": {
+                    "type": "string",
+                    "x-autocomplete": {
+                      "operationId": "get:/autocomplete",
+                      "defaultParametersValue": {
+                        "flexible": "${autocompleteValue}",
+                        "fixed": 123
+                      }
+                    }
+                  },
+                  "X-ENUM": {
+                    "type": "string",
+                    "x-enum": {
+                      "operationId": "get:/enum",
+                      "defaultParametersValue": {
+                        "fixed": "fixed"
+                      }
+                    }
+                  },
+                  "WYSWYG": {
+                    "type": "string",
+                    "format": "wyswyg"
+                  },
+                  "EMAIL": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "PASSWORD": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "MULTILINE": {
+                    "type": "string",
+                    "format": "multiline"
+                  },
+                  "HOSTNAME": {
+                    "type": "string",
+                    "format": "hostname"
+                  },
+                  "IPV4": {
+                    "type": "string",
+                    "format": "ipv4"
+                  },
+                  "IPV6": {
+                    "type": "string",
+                    "format": "ipv6"
+                  }
+                }
+              }
+            }
+          },
+          "description": "# heading 1 \n ## heading 2",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Empty"
+          }
+        },
+        "tags": ["A", "B", "C"],
+        "summary": "A short summary of what the operation does.",
+        "description": "# heading 1 \n ## heading 2",
+        "externalDocs": {
+          "url": "https://TODO.viron.app/",
+          "description": "description"
+        },
+        "deprecated": true,
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "servers": [
+          {
+            "url": "https://TODO.viron.app/",
+            "description": "sample one"
+          },
+          {
+            "url": "https://TODO.viron.app/",
+            "description": "sample two"
+          }
+        ]
+      }
+    },
+    "/autocomplete": {
+      "get": {
+        "operationId": "get:/autocomplete",
+        "parameters": [
+          {
+            "name": "flexible",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fixed",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enum": {
+      "get": {
+        "operationId": "get:/enum",
+        "parameters": [
+          {
+            "name": "fixed",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ShopList": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ShopPager"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Shop"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "Shop": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ShopName"
+          },
+          {
+            "$ref": "#/components/schemas/ShopCategory"
+          }
+        ]
+      },
+      "ShopName": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ShopCategory": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          }
+        }
+      },
+      "ShopPager": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ShopPagerPage"
+          },
+          {
+            "$ref": "#/components/schemas/ShopPagerMaxpage"
+          }
+        ]
+      },
+      "ShopPagerPage": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer"
+          }
+        }
+      },
+      "ShopPagerMaxpage": {
+        "type": "object",
+        "properties": {
+          "maxpage": {
+            "type" : "integer"
+          }
+        }
+      },
+      "UserId": {
+        "type": "string"
+      },
+      "UserName": {
+        "type": "string"
+      },
+      "PagerPage": {
+        "type": "integer"
+      },
+      "PagerSize": {
+        "type": "integer"
+      },
+      "PagerMaxpage": {
+        "type": "integer"
+      },
+      "Sort": {
+        "type": "string"
+      }
+    },
+    "parameters": {
+      "PagerPage": {
+        "name": "page",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/PagerPage"
+        }
+      },
+      "PagerSize": {
+        "name": "size",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/PagerSize"
+        }
+      },
+      "Sort": {
+        "name": "sort",
+        "in": "query",
+        "schema": {
+          "$ref": "#/components/schemas/Sort"
+        }
+      }
+    },
+    "responses": {
+      "Empty": {
+        "description": "empty response."
+      },
+      "Number": {
+        "description": "empty response."
+      },
+      "Table": {
+        "description": "empty response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "list": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "$ref": "#/components/schemas/UserId"
+                      }
+                    }
+                  }
+                },
+                "page": {
+                  "$ref": "#/components/schemas/PagerPage"
+                },
+                "maxpage": {
+                  "$ref": "#/components/schemas/PagerMaxpage"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "A",
+      "description": "tag of A."
+    },
+    {
+      "name": "B",
+      "description": "tag of B.",
+      "externalDocs": {
+        "url": "https://TODO.viron.app/",
+        "description": "description"
+      }
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://localhost:8000/",
+      "description": "simple."
+    },
+    {
+      "url": "https://{username}.TODO.viron.app:{port}/{basePath}",
+      "description": "complicated.",
+      "variables": {
+        "username": {
+          "default": "demo",
+          "description": "this value is assigned by the service provider"
+        },
+        "port": {
+          "default": "443",
+          "enum": ["8443", "443"]
+        },
+        "basePath": {
+          "default": "v2"
+        }
+      }
+    }
+  ],
+  "externalDocs": {
+    "url": "https://TODO.viron.app/",
+    "description": "external documentation."
+  },
+  "security": [
+    {
+      "api_key": []
+    },
+    {
+      "petstore_auth": [
+        "write:pets",
+        "read:pets"
+      ]
+    }
+  ]
+}

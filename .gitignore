@@ -39,10 +39,14 @@ jspm_packages
 dist
 
 .DS_Store
-*.iml
-.idea
+data/*/db
 
-# docker
-.docker
+.npmrc
+.vscode
+tsconfig.tsbuildinfo
+*/**/package-lock.json
+*/**/cert/*
 
-src/css/app.tmp.css
+!.gitkeep
+
+.env
