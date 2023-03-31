@@ -3,6 +3,7 @@ package domains
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"regexp"
 	"strings"
 
@@ -84,6 +85,7 @@ func GetOas(apiDef *openapi3.T, roleIDs []string) *openapi3.T {
 				log.Debugf("roleId %s resourceId %s method2Permissions(pathMethod.method) %+v", roleID, content.ResourceID, method2Permissions(pathMethod.method))
 				if hasPermissionByResourceID(roleID, content.ResourceID, method2Permissions(pathMethod.method)) {
 					granted = append(granted, content)
+					break
 				}
 			}
 
@@ -95,7 +97,7 @@ func GetOas(apiDef *openapi3.T, roleIDs []string) *openapi3.T {
 			rewritedPages = append(rewritedPages, page)
 		}
 	}
-
+	
 	log.Debugf("rewritedPages %+v", rewritedPages)
 
 	clone.Info.Extensions[constant.OAS_X_PAGES] = rewritedPages
@@ -196,17 +198,29 @@ func findOperationIDByPathMethod(method, path string, apiDef *openapi3.T) string
 			continue
 		}
 
-		// /users/{userId} を /users/+ に正規表現パターンにする
-		rep := regexp.MustCompile(`{.+}`)
-		pattern := rep.ReplaceAllString(pathMethod.path, "+")
-		matcher := regexp.MustCompile(pattern)
-
-		// メソッド名が同じ かつ パスと正規表現でマッチする かつ "/"の数が同じ
-		if strings.EqualFold(pathMethod.method, method) && matcher.MatchString(path) && (strings.Count(path, "/") == strings.Count(pathMethod.path, "/")) {
+		// メソッド名が同じ かつ パスが同じ
+		if strings.EqualFold(pathMethod.method, method) && isPathMatch(path, pathMethod.path) {
 			return operationID
 		}
 	}
 	return ""
+}
+
+// isPathMatch リクエストされたパスとoasのパスがマッチするかの検証
+func isPathMatch(reqPath string, defPath string) bool {
+	u, err := url.Parse(reqPath)
+	if err != nil {
+		log.Errorf("url.Parse failed. err:%v\n", err)
+		return false
+	}
+
+	re := regexp.MustCompile(`\{([^/]+)\}`)
+	defPath = re.ReplaceAllStringFunc(defPath, func(s string) string {
+		return "([^/]+)"
+	})
+	re = regexp.MustCompile("^" + defPath + "$")
+
+	return re.MatchString(u.Path)
 }
 
 // genPermissions resourceIDをキーにして、operationIDのlistを返す
