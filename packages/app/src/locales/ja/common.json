@@ -1,0 +1,105 @@
+{
+  "version": "ver. {{version}}",
+  "catchphrase": "Give OAS, Get GUI.",
+  "subCatchphrase": "An Open-Source Frontend-NoCode<br />Administration GUI Tool.",
+  "welcomeMessage": "Vironにようこそ！",
+  "description": "Vironとは、統一した操作性・ダッシュボードを持つ、オープンソースの管理画面ツールです。OpenAPI(Swagger)に対応したAPIを書くだけで、フロントエンドもデザインも学習コストもかけずに、複数の管理画面とダッシュボードを作ることができます。",
+  "startButtonLabel": "Vironを利用する",
+  "documentation": "ドキュメント",
+  "releaseNotes": "リリースノート",
+  "help": "ヘルプ",
+  "service": {
+    "twitter": "Twitter",
+    "github": "GitHub"
+  },
+  "language": {
+    "en": "English",
+    "ja": "日本語"
+  },
+  "endpoint": "管理画面",
+  "endpoints": "管理画面",
+  "group": "グループ",
+  "groups": "グループ",
+  "createGroup":{
+    "head":{
+      "title":"グループの作成",
+      "description":"エンドポイントをグループで管理します"
+    },
+    "idFormLabel":"ID",
+    "nameFormLabel":"グループ名",
+    "descriptionFormLabel":"説明",
+    "addButtonLabel":"追加",
+    "cancelButtonLabel":"キャンセル"
+  },
+  "endpointsTabLabel": "$t(endpoints)",
+  "groupsTabLabel": "$t(groups)",
+  "dashboard": {
+    "endpoints": {
+      "title": "ダッシュボード",
+      "description": "追加された$t(endpoint)を一覧表示します",
+      "emptyMessage": "管理画面はまだありません<br>$t(addEndpointButtonLabel)ボタンから追加できます"
+    },
+    "groups": {
+      "title": "グループ",
+      "description": "$t(endpoints)を$t(groups)にまとめることができます"
+    }
+  },
+  "addEndpointButtonLabel": "$t(endpoint)の追加",
+  "addGroupButtonLabel": "$t(group)の追加",
+  "exportEndpoints": "$t(endpoint)リストのエクスポート",
+  "importEndpoints": "$t(endpoint)リストのインポート",
+  "enterEndpoint": "管理画面",
+  "signout": "サインアウト",
+  "oAuth": "OAuth",
+  "email": "Email",
+  "addEndpoint": {
+    "title": "$t(endpoint)の追加",
+    "idInputLabel": "タイトル",
+    "idInputPlaceholder": "Demo",
+    "urlInputLabel": "URL",
+    "urlInputPlaceholder": "https://demo.viron.plus",
+    "groupInputLabel": "Groupの追加",
+    "groupInputDescription": "管理画面を任意のグループに追加できます。グループの追加はダッシュボードから行えます。",
+    "addButtonLabel": "追加する",
+    "cancelButtonLabel": "キャンセル"
+  },
+  "editEndpoint":{
+    "title": "$t(endpoint)の編集",
+    "idInputLabel": "タイトル",
+    "urlInputLabel": "URL",
+    "groupInputLabel": "グループへ追加",
+    "groupInputDescription": "管理画面を任意のグループに追加できます。グループの追加はダッシュボードから行えます。",
+    "updateButtonLabel": "更新する",
+    "cancelButtonLabel": "キャンセル"
+  },
+  "endpointEditButtonLabel":"編集",
+  "endpointInformationButtonLabel": "詳細情報",
+  "endpointQRCodeShareButtonLabel": "QRコードの共有",
+  "removeEndpointButtonLabel": "削除",
+  "endpointInformation": {
+    "title": "詳細情報"
+  },
+  "endpointQRCodeShare": {
+    "title": "QRコードの共有",
+    "copyUrlButtonLabel": "URLをコピー"
+  },
+  "internalPagePaths": {
+    "root": "トップ",
+    "endpoints": "管理画面",
+    "groups": "グループ",
+    "dashboard": "ダッシュボード"
+  },
+  "prependButtonLabel":"先頭に追加",
+  "insertButtonLabel":"挿入",
+  "appendButtonLabel":"追加",
+  "removeButtonLabel":"削除",
+  "submitButtonLabel":"更新",
+  "cancelButtonLabel":"キャンセル",
+  "moveUpButtonLabel":"上に移動",
+  "moveDownButtonLabel":"下に移動",
+  "menuButtonLabel":"メニュー",
+  "removeModal":{
+    "title":"グループを削除する",
+    "description":"本当に削除しますか? グループ内のエンドポイントはグループ化されないままになります。"
+  }
+}

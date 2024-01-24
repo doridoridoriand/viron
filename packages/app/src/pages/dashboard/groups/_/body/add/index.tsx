@@ -2,15 +2,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useCallback, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import FilledButton, {
-  Props as FilledButtonProps,
-} from '~/components/button/filled';
-import OutlineButton, {
-  Props as OutlineButtonProps,
-} from '~/components/button/outline/on';
+import Button, { Props as ButtonProps } from '~/components/button';
 import Head from '~/components/head';
 import Textinput from '~/components/textinput';
 import { useEndpoint } from '~/hooks/endpoint';
+import { useTranslation } from '~/hooks/i18n';
 import { COLOR_SYSTEM, EndpointGroup } from '~/types';
 
 export type Props = {
@@ -19,6 +15,7 @@ export type Props = {
 };
 const Add: React.FC<Props> = ({ onAdd, onCancel }) => {
   const { addGroup } = useEndpoint();
+  const { t } = useTranslation();
 
   const schema = useMemo(
     () =>
@@ -55,10 +52,10 @@ const Add: React.FC<Props> = ({ onAdd, onCancel }) => {
     [_handleSubmit, addGroup, setError, clearErrors, onAdd]
   );
 
-  const handleCancelClick = useCallback<OutlineButtonProps['onClick']>(() => {
+  const handleCancelClick = useCallback<ButtonProps['onClick']>(() => {
     onCancel();
   }, [onCancel]);
-  const handleAddClick = useCallback<FilledButtonProps['onClick']>(() => {
+  const handleAddClick = useCallback<ButtonProps['onClick']>(() => {
     // Do nothing.
   }, []);
 
@@ -68,43 +65,44 @@ const Add: React.FC<Props> = ({ onAdd, onCancel }) => {
         <div>
           <Head
             on={COLOR_SYSTEM.SURFACE}
-            title="Create a Group"
-            description="Manage endpoints in groups."
+            title={t('createGroup.head.title')}
+            description={t('createGroup.head.description')}
           />
         </div>
         <div className="space-y-4">
           <Textinput
             type="text"
-            label="ID"
+            label={t('createGroup.idFormLabel')}
             on={COLOR_SYSTEM.SURFACE}
             error={formState.errors.id}
             render={(bind) => <input {...bind} {...register('id')} />}
           />
           <Textinput
             type="text"
-            label="Name"
+            label={t('createGroup.nameFormLabel')}
             on={COLOR_SYSTEM.SURFACE}
             error={formState.errors.name}
             render={(bind) => <input {...bind} {...register('name')} />}
           />
           <Textinput
             type="text"
-            label="Description"
+            label={t('createGroup.descriptionFormLabel')}
             on={COLOR_SYSTEM.SURFACE}
             error={formState.errors.description}
             render={(bind) => <input {...bind} {...register('description')} />}
           />
         </div>
         <div className="flex justify-end gap-2">
-          <OutlineButton
+          <Button
+            variant="outlined"
             on={COLOR_SYSTEM.SURFACE}
-            label="Cancel"
+            label={t('createGroup.cancelButtonLabel')}
             onClick={handleCancelClick}
           />
-          <FilledButton
+          <Button
             type="submit"
             cs={COLOR_SYSTEM.PRIMARY}
-            label="Add"
+            label={t('createGroup.addButtonLabel')}
             onClick={handleAddClick}
           />
         </div>

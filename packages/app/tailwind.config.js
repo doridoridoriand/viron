@@ -67,7 +67,7 @@ const COLORS = {
   'thm-on-surface-variant-low': 'var(--thm-on-surface-variant-low)',
   'thm-on-surface-variant-slight': 'var(--thm-on-surface-variant-slight)',
   'thm-on-surface-variant-faint': 'var(--thm-on-surface-variant-faint)',
-  'thm-outline': 'var(--thm-surface-outline)',
+  'thm-outline': 'var(--thm-outline)',
 };
 
 module.exports = {
@@ -103,6 +103,7 @@ module.exports = {
       'group-hover:ring',
       'group-active:ring',
       'group-focus:ring',
+      'divide',
     ];
 
     const safelist = [];
@@ -119,8 +120,16 @@ module.exports = {
     },
     // Utilities by a-z order.
     extend: {
+      keyframes: {
+        'move-left-and-back': {
+          '0%': { transform: 'translateX(0)' },
+          '25%': { transform: 'translateX(-6px)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
       animation: {
         'spin-slow': 'spin 3s linear infinite',
+        'move-left-and-back': 'move-left-and-back 2s ease-out infinite',
       },
       colors: COLORS,
       fontSize: {
@@ -148,7 +157,6 @@ module.exports = {
         '75%': '75%',
       },
       spacing: {
-        '1/2em': '0.5em',
         em: '1em',
         15: '3.75rem',
         17: '4.25rem',
@@ -194,5 +202,8 @@ module.exports = {
       },
     },
   },
-  plugins: [require('@tailwindcss/aspect-ratio')],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/container-queries'),
+  ],
 };

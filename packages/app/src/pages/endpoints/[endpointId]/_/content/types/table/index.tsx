@@ -1,12 +1,10 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import TextButton, {
-  Props as TextButtonProps,
-} from '~/components/button/text/on';
+import React, { useCallback, useMemo } from 'react';
+import Button, { Props as ButtonProps } from '~/components/button';
 import DotsCircleHorizontalIcon from '~/components/icon/dotsCircleHorizontal/outline';
 import Table, { Props as TableProps } from '~/components/table';
 import Popover, { usePopover } from '~/portals/popover';
 import { COLOR_SYSTEM, Endpoint } from '~/types';
-import { Document, Content, SORT } from '~/types/oas';
+import { Document, Content, SORT, Sort } from '~/types/oas';
 import {
   extractTableColumns,
   getTableRows,
@@ -24,6 +22,10 @@ type Props = {
   descendants: UseDescendantsReturn;
   onDescendantOperationSuccess: DescendantProps['onOperationSuccess'];
   onDescendantOperationFail: DescendantProps['onOperationFail'];
+  sortState: [
+    Record<string, Sort>,
+    React.Dispatch<React.SetStateAction<Record<string, Sort>>>
+  ];
 };
 const ContentTable: React.FC<Props> = ({
   endpoint,
@@ -33,14 +35,9 @@ const ContentTable: React.FC<Props> = ({
   descendants,
   onDescendantOperationSuccess,
   onDescendantOperationFail,
+  sortState,
 }) => {
-  const [sorts, setSorts] = useState<
-    Record<
-      TableProps['columns'][number]['key'],
-      TableProps['columns'][number]['sort']
-    >
-  >({});
-
+  const [sorts, setSorts] = sortState;
   const columns = useMemo<TableProps['columns']>(() => {
     const extractTableColumnsResult = extractTableColumns(document, content);
     if (extractTableColumnsResult.isFailure()) {
@@ -110,7 +107,7 @@ const ContentTable: React.FC<Props> = ({
   return (
     <>
       <Table
-        on={COLOR_SYSTEM.SURFACE}
+        on={COLOR_SYSTEM.BACKGROUND}
         columns={columns}
         dataSource={dataSource}
         renderActions={descendants.length ? renderActions : undefined}
@@ -138,9 +135,13 @@ const Operations: React.FC<OperationsProps> = ({
   onOperationFail,
 }) => {
   const popover = usePopover<HTMLDivElement>();
-  const handleButtonClick = useCallback<TextButtonProps['onClick']>(() => {
-    popover.open();
-  }, [popover]);
+  const handleButtonClick = useCallback<ButtonProps['onClick']>(
+    (_, event) => {
+      event?.stopPropagation();
+      popover.open();
+    },
+    [popover]
+  );
   const handleDescendantClick = useCallback<
     NonNullable<DescendantProps['onClick']>
   >(() => {
@@ -150,7 +151,8 @@ const Operations: React.FC<OperationsProps> = ({
   return (
     <>
       <div ref={popover.targetRef}>
-        <TextButton
+        <Button
+          variant="text"
           on={COLOR_SYSTEM.SURFACE}
           Icon={DotsCircleHorizontalIcon}
           onClick={handleButtonClick}

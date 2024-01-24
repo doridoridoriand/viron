@@ -1,25 +1,24 @@
+import { PlusIcon } from '@heroicons/react/outline';
 import React, { useCallback } from 'react';
-import FilledButton, {
-  Props as FilledButtonProps,
-} from '~/components/button/filled';
+import Button, { Props as ButtonProps } from '~/components/button';
 import Head from '~/components/head';
-import CollectionIcon from '~/components/icon/collection/outline';
-import PlusCircleIcon from '~/components/icon/plusCircle/outline';
 import { useEndpoint } from '~/hooks/endpoint';
+import { useTranslation } from '~/hooks/i18n';
 import { Props as LayoutProps } from '~/layouts/index';
 import Modal, { useModal } from '~/portals/modal';
 import { COLOR_SYSTEM } from '~/types';
-import Tabs, { ITEM as TABS_ITEM } from '../../../_/tabs/';
+import Menu from '../../../_/menu';
 import Add, { Props as AddProps } from './add/';
 import Item from './item';
 
 export type Props = Parameters<LayoutProps['renderBody']>[0];
 const Body: React.FC<Props> = ({ className, style }) => {
+  const { t } = useTranslation();
   const { groupList } = useEndpoint();
 
   // Add modal.
   const modal = useModal();
-  const handleAddClick = useCallback<FilledButtonProps['onClick']>(() => {
+  const handleAddClick = useCallback<ButtonProps['onClick']>(() => {
     modal.open();
   }, [modal.open]);
   const handleAddAdd = useCallback<AddProps['onAdd']>(() => {
@@ -32,35 +31,29 @@ const Body: React.FC<Props> = ({ className, style }) => {
   return (
     <>
       <div className={className} style={style}>
-        <div className="">
+        <div className="max-w-[1252px] mx-auto px-4 lg:px-8">
           {/* Head */}
           <div>
-            <div className="p-4">
+            <div className="py-6 lg:py-10 flex justify-between items-center">
               <Head
                 on={COLOR_SYSTEM.BACKGROUND}
-                title={
-                  <div className="flex items-center gap-2">
-                    <CollectionIcon className="w-em" />
-                    <div>Dashboard / Groups</div>
-                  </div>
-                }
-                description="This is your personal, private dashboard."
+                title={<div>{t('dashboard.groups.title')}</div>}
+                description={t('dashboard.groups.description')}
               />
-            </div>
-            <div>
-              <Tabs item={TABS_ITEM.GROUPS} />
+              <div className="flex items-center space-x-4">
+                <Button
+                  variant="outlined"
+                  cs={COLOR_SYSTEM.PRIMARY}
+                  label={t('addGroupButtonLabel')}
+                  Icon={PlusIcon}
+                  onClick={handleAddClick}
+                />
+                <Menu />
+              </div>
             </div>
           </div>
           {/* Body */}
           <div className="">
-            <div className="p-4 flex justify-end border-b border-thm-on-background-slight">
-              <FilledButton
-                cs={COLOR_SYSTEM.PRIMARY}
-                label="Add a Group"
-                Icon={PlusCircleIcon}
-                onClick={handleAddClick}
-              />
-            </div>
             <ul className="">
               {groupList.map((group) => (
                 <li

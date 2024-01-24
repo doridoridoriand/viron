@@ -1,17 +1,9 @@
 import classnames from 'classnames';
-import React, { useCallback, useMemo, useState } from 'react';
-import { SIZE as BUTTON_SIZE } from '~/components/button';
-import FilledButton, {
-  Props as FilledButtonProps,
-} from '~/components/button/filled';
-import TextOnButton, {
-  Props as TextOnButtonProps,
-} from '~/components/button/text/on';
+import React, { useMemo, useState } from 'react';
 import ChevronDownIcon from '~/components/icon/chevronDown/outline';
 import ChevronRightIcon from '~/components/icon/chevronRight/outline';
 import FolderIcon from '~/components/icon/folder/outline';
 import FolderOpenIcon from '~/components/icon/folderOpen/outline';
-import { COLOR_SYSTEM } from '~/types';
 import { Page, PageId } from '~/types/oas';
 
 type Partial = {
@@ -84,7 +76,7 @@ const _Pages: React.FC<Props> = ({ pages, selectedPageId, onSelect }) => {
   return (
     <GroupOrPage
       pages={pages}
-      depth={1}
+      depth={0}
       list={tree.children}
       selectedPageId={selectedPageId}
       onSelect={onSelect}
@@ -109,7 +101,6 @@ const GroupOrPage: React.FC<{
           content = (
             <_Page
               page={page}
-              depth={depth}
               isSelected={item === selectedPageId}
               onSelect={onSelect}
             />
@@ -126,7 +117,7 @@ const GroupOrPage: React.FC<{
           );
         }
         return (
-          <li key={idx} className="mt-1">
+          <li className="pt-1" key={idx}>
             {content}
           </li>
         );
@@ -143,28 +134,35 @@ const Group: React.FC<{
   onSelect: (pageId: PageId) => void;
 }> = ({ pages, depth, partial, selectedPageId, onSelect }) => {
   const [isOpened, setIsOpened] = useState<boolean>(true);
-  const handleClick = useCallback<TextOnButtonProps['onClick']>(() => {
+  const handleClick = () => {
     setIsOpened((currVal) => !currVal);
-  }, []);
+  };
+
   return (
     <div>
-      <div className="">
-        <TextOnButton
-          pl={`${depth * 8}px`}
-          className="block w-full"
-          on={COLOR_SYSTEM.SURFACE}
-          size={BUTTON_SIZE.XS}
-          rounded={false}
-          Icon={isOpened ? FolderOpenIcon : FolderIcon}
-          IconRight={isOpened ? ChevronDownIcon : ChevronRightIcon}
-          label={partial.group}
-          onClick={handleClick}
-        />
-      </div>
+      <button
+        className="rounded text-start p-1.5 w-full text-thm-on-surface-low text-xs flex items-center justify-between gap-1 hover:bg-thm-on-surface-faint focus-visible:ring-2 ring-thm-on-surface-low focus:outline-none"
+        onClick={handleClick}
+      >
+        {isOpened ? (
+          <ChevronDownIcon className="w-[1.25em] h-[1.25em] flex-none" />
+        ) : (
+          <ChevronRightIcon className="w-[1.25em] h-[1.25em] flex-none" />
+        )}
+        {isOpened ? (
+          <FolderOpenIcon className="w-[1.5em] h-[1.5em] flex-none" />
+        ) : (
+          <FolderIcon className="w-[1.5em] h-[1.5em] flex-none" />
+        )}
+        <span className="w-0 flex-1 truncate font-bold">{partial.group}</span>
+      </button>
       <div
-        className={classnames('mt-1', {
-          hidden: !isOpened,
-        })}
+        className={classnames(
+          'ml-3 border-l border-thm-on-surface-slight pl-1',
+          {
+            hidden: !isOpened,
+          }
+        )}
       >
         <GroupOrPage
           pages={pages}
@@ -180,43 +178,25 @@ const Group: React.FC<{
 
 const _Page: React.FC<{
   page: Page;
-  depth: number;
   isSelected: boolean;
   onSelect: (pageId: PageId) => void;
-}> = ({ page, depth, isSelected, onSelect }) => {
-  const handleClick = useCallback<
-    TextOnButtonProps['onClick'] | FilledButtonProps['onClick']
-  >(() => {
+}> = ({ page, isSelected, onSelect }) => {
+  const handleClick = () => {
     onSelect(page.id);
-  }, [page, onSelect]);
+  };
 
   return (
-    <div
-      className={classnames('border-thm-on-primary', {
-        'border-r-4': isSelected,
-      })}
-    >
-      {isSelected ? (
-        <FilledButton
-          pl={`${depth * 8}px`}
-          className="block w-full"
-          cs={COLOR_SYSTEM.PRIMARY}
-          size={BUTTON_SIZE.XS}
-          rounded={false}
-          label={page.title}
-          onClick={handleClick}
-        />
-      ) : (
-        <TextOnButton
-          pl={`${depth * 8}px`}
-          className="block w-full"
-          on={COLOR_SYSTEM.SURFACE}
-          size={BUTTON_SIZE.XS}
-          rounded={false}
-          label={page.title}
-          onClick={handleClick}
-        />
+    <button
+      className={classnames(
+        'rounded text-start py-1.5 px-3 w-full text-xs focus-visible:ring-2 ring-thm-on-surface-low focus:outline-none truncate',
+        {
+          'text-thm-on-surface-faint bg-thm-on-surface-low': isSelected,
+          'text-thm-on-surface-low hover:bg-thm-on-surface-faint': !isSelected,
+        }
       )}
-    </div>
+      onClick={handleClick}
+    >
+      {page.title}
+    </button>
   );
 };

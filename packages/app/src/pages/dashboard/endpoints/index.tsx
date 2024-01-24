@@ -1,8 +1,9 @@
-import { PageProps } from 'gatsby';
+import { PageProps, graphql } from 'gatsby';
 import React, { useCallback } from 'react';
 import Metadata from '~/components/metadata';
 import useTheme from '~/hooks/theme';
 import Layout, { Props as LayoutProps } from '~/layouts/index';
+import { useAppScreenGlobalStateValue } from '~/store';
 import Appbar from '../_/appBar';
 import Navigation from '../_/navigation';
 import Body from './_/body/';
@@ -10,6 +11,7 @@ import Body from './_/body/';
 type Props = PageProps;
 const DashboardEndpointsPage: React.FC<Props> = () => {
   useTheme();
+  const { lg } = useAppScreenGlobalStateValue();
 
   const renderAppBar = useCallback<NonNullable<LayoutProps['renderAppBar']>>(
     (args) => <Appbar {...args} />,
@@ -29,7 +31,7 @@ const DashboardEndpointsPage: React.FC<Props> = () => {
     <>
       <Metadata title="Dashboard" />
       <Layout
-        renderAppBar={renderAppBar}
+        renderAppBar={lg ? undefined : renderAppBar}
         renderNavigation={renderNavigation}
         renderBody={renderBody}
       />
@@ -38,3 +40,17 @@ const DashboardEndpointsPage: React.FC<Props> = () => {
 };
 
 export default DashboardEndpointsPage;
+
+export const query = graphql`
+  query ($language: String!) {
+    locales: allLocale(filter: { language: { eq: $language } }) {
+      edges {
+        node {
+          ns
+          data
+          language
+        }
+      }
+    }
+  }
+`;

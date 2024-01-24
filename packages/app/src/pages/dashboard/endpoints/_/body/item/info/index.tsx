@@ -10,6 +10,7 @@ import TagIcon from '~/components/icon/tag/outline';
 import License from '~/components/license';
 import Link from '~/components/link';
 import Server from '~/components/server';
+import { useTranslation } from '~/hooks/i18n';
 import { COLOR_SYSTEM, Endpoint } from '~/types';
 import { Document } from '~/types/oas';
 import Thumbnail from '../thumbnail';
@@ -19,6 +20,7 @@ type Props = {
   document?: Document;
 };
 const Info: React.FC<Props> = ({ endpoint, document }) => {
+  const { t } = useTranslation();
   return (
     <div className="text-thm-on-surface">
       <div className="pb-4 mb-4 border-b border-thm-on-surface-slight">
@@ -27,7 +29,7 @@ const Info: React.FC<Props> = ({ endpoint, document }) => {
           title={
             <div className="flex items-center gap-2">
               <InformationCircleIcon className="w-em" />
-              <div>Information</div>
+              <div>{t('endpointInformation.title')}</div>
             </div>
           }
         />
@@ -35,7 +37,11 @@ const Info: React.FC<Props> = ({ endpoint, document }) => {
       <div>
         <div className="flex gap-4 items-center">
           <div className="flex-none">
-            <Thumbnail endpoint={endpoint} document={document} />
+            <Thumbnail
+              className="w-12 h-12"
+              endpoint={endpoint}
+              document={document}
+            />
           </div>
           <div className="flex-1">
             <div className="text-xxs text-thm-on-surface-low">
@@ -103,7 +109,6 @@ const Info: React.FC<Props> = ({ endpoint, document }) => {
               {document.info.termsOfService && (
                 <Link
                   className="group focus:outline-none"
-                  on={COLOR_SYSTEM.SURFACE}
                   to={document.info.termsOfService}
                 >
                   <div className="flex gap-1 items-center text-xs text-thm-on-surface group-hover:underline group-active:text-thm-on-surface-low group-focus:ring-2 group-focus:ring-thm-on-surface">

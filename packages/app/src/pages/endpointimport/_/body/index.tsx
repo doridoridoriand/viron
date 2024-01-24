@@ -1,13 +1,11 @@
-import { navigate } from 'gatsby';
 import { parse } from 'query-string';
 import React, { useCallback, useEffect, useState } from 'react';
-import FilledButton, {
-  Props as FilledButtonProps,
-} from '~/components/button/filled';
+import Button, { Props as ButtonProps } from '~/components/button';
 import Error from '~/components/error';
 import Spinner from '~/components/spinner';
 import { BaseError } from '~/errors/index';
 import { useEndpoint } from '~/hooks/endpoint';
+import { useI18n } from '~/hooks/i18n';
 import { Props as LayoutProps } from '~/layouts';
 import { COLOR_SYSTEM, Endpoint } from '~/types';
 
@@ -15,6 +13,7 @@ export type Props = Parameters<LayoutProps['renderBody']>[0] & {
   search: string;
 };
 const Body: React.FC<Props> = ({ style, className = '', search }) => {
+  const { navigate } = useI18n();
   const { connect, addEndpoint } = useEndpoint();
   const [error, setError] = useState<BaseError | null>(null);
   const [isPending, setIsPending] = useState<boolean>(true);
@@ -54,9 +53,9 @@ const Body: React.FC<Props> = ({ style, className = '', search }) => {
     f();
   }, []);
 
-  const handleButtonClick = useCallback<FilledButtonProps['onClick']>(() => {
+  const handleButtonClick = useCallback<ButtonProps['onClick']>(() => {
     navigate('/dashboard/endpoints');
-  }, []);
+  }, [navigate]);
 
   if (isPending) {
     return (
@@ -83,7 +82,7 @@ const Body: React.FC<Props> = ({ style, className = '', search }) => {
       <div className="p-4">
         <div>
           Have completed importing an endpoint successfully.{' '}
-          <FilledButton
+          <Button
             cs={COLOR_SYSTEM.PRIMARY}
             label="Go back to the dashboard"
             onClick={handleButtonClick}

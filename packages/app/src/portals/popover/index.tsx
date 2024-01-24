@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import React, {
+  PropsWithChildren,
   useCallback,
   useEffect,
   useMemo,
@@ -18,7 +19,7 @@ const PLACEMENT = {
   BOTTOM: 'Bottom',
   BOTTOM_LEFT: 'BottomLeft',
 } as const;
-type Placement = typeof PLACEMENT[keyof typeof PLACEMENT];
+type Placement = (typeof PLACEMENT)[keyof typeof PLACEMENT];
 
 type Props = {
   isOpened: boolean;
@@ -26,9 +27,10 @@ type Props = {
   onRequestClose: () => void;
   // Target element ref for a popover to be placed.
   targetRef: React.RefObject<HTMLElement>;
+  isRenewal?: boolean;
 };
 
-const Popover: React.FC<Props> = (props) => {
+const Popover: React.FC<Props> & { renewal: React.FC<Props> } = (props) => {
   const screen = useAppScreenGlobalStateValue();
 
   const { lg } = screen;
@@ -38,14 +40,28 @@ const Popover: React.FC<Props> = (props) => {
     return <PopoverNotLg {...props} />;
   }
 };
+
+const Renewal: React.FC<Props> = (props) => {
+  const screen = useAppScreenGlobalStateValue();
+
+  const { lg } = screen;
+  if (lg) {
+    return <PopoverLg {...props} isRenewal />;
+  } else {
+    return <PopoverNotLg {...props} isRenewal />;
+  }
+};
+
+Popover.renewal = Renewal;
 export default Popover;
 
-const PopoverLg: React.FC<Props> = ({
+const PopoverLg: React.FC<PropsWithChildren<Props>> = ({
   isOpened,
   isHidden,
   onRequestClose,
   targetRef,
   children,
+  isRenewal = false,
 }) => {
   const screen = useAppScreenGlobalStateValue();
   const [isVisible, setIsVisible] = useState<boolean>(isOpened);
@@ -166,8 +182,9 @@ const PopoverLg: React.FC<Props> = ({
 
   const content = useMemo<JSX.Element | null>(() => {
     const space = 8;
-    const commonClassName =
-      'p-2 rounded bg-thm-surface border border-thm-on-surface-low shadow-01dp overflow-scroll overscroll-contain';
+    const commonClassName = isRenewal
+      ? 'p-4 rounded-xl bg-thm-surface border border-thm-on-surface-low shadow-01dp overflow-scroll overscroll-contain'
+      : 'p-2 rounded bg-thm-surface border border-thm-on-surface-low shadow-01dp overflow-scroll overscroll-contain';
     switch (placement) {
       case PLACEMENT.TOP_LEFT: {
         return (
@@ -315,7 +332,7 @@ const PopoverLg: React.FC<Props> = ({
     </Portal>
   );
 };
-const PopoverNotLg: React.FC<Props> = ({
+const PopoverNotLg: React.FC<PropsWithChildren<Props>> = ({
   isOpened,
   isHidden,
   onRequestClose,

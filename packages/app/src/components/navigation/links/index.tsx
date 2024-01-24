@@ -4,6 +4,7 @@ import { Props as BaseProps } from '~/components';
 import ExternalLinkIcon from '~/components/icon/externalLink/outline';
 import Link from '~/components/link';
 import { URL } from '~/constants';
+import { useTranslation } from '~/hooks/i18n';
 import { Pathname, URL as _URL } from '~/types';
 
 const links: {
@@ -12,18 +13,8 @@ const links: {
   isExternal: boolean;
 }[] = [
   {
-    to: '/',
-    label: 'Home',
-    isExternal: false,
-  },
-  {
-    to: '/dashboard/endpoints',
-    label: 'Dashboard',
-    isExternal: false,
-  },
-  {
     to: URL.DOCUMENTATION,
-    label: 'Documentation',
+    label: 'documentation',
     isExternal: true,
   },
   /*
@@ -35,18 +26,21 @@ const links: {
     */
   {
     to: URL.RELEASE_NOTES,
-    label: 'Release Notes',
+    label: 'releaseNotes',
     isExternal: true,
   },
   {
     to: URL.HELP,
-    label: 'Help',
+    label: 'help',
     isExternal: true,
   },
 ];
 
 type Props = BaseProps;
-const Links: React.FC<Props> = ({ className = '', on }) => {
+const Links: React.FC<Props> & {
+  renewal: React.FC<Props>;
+} = ({ className = '', on }) => {
+  const { t } = useTranslation();
   return (
     <ul
       className={classnames(
@@ -56,12 +50,12 @@ const Links: React.FC<Props> = ({ className = '', on }) => {
     >
       {links.map((item) => (
         <li key={item.to}>
-          <Link className="group focus:outline-none" on={on} to={item.to}>
+          <Link className="group focus:outline-none" to={item.to}>
             <div
               className={`flex gap-1 items-center text-thm-on-${on} group-hover:underline group-active:text-thm-on-${on}-low group-focus:ring-2 group-focus:ring-thm-on-${on}`}
             >
               {item.isExternal && <ExternalLinkIcon className="w-em" />}
-              <div>{item.label}</div>
+              <div>{t(item.label)}</div>
             </div>
           </Link>
         </li>
@@ -69,4 +63,25 @@ const Links: React.FC<Props> = ({ className = '', on }) => {
     </ul>
   );
 };
+const Renewal: React.FC<Props> = ({ className = '', on }) => {
+  const { t } = useTranslation();
+  return (
+    <ul className={className}>
+      {links.map((item) => (
+        <li key={item.to}>
+          <Link
+            className={`flex gap-2 text-sm items-center text-thm-on-${on} hover:underline active:text-thm-on-${on}-low focus:outline outline-2 outline-thm-outline`}
+            to={item.to}
+          >
+            {item.isExternal && <ExternalLinkIcon className="w-[1.42em]" />}
+            <div>{t(item.label)}</div>
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+Links.renewal = Renewal;
+
 export default Links;

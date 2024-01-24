@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import React, { useCallback, useMemo, useState } from 'react';
-import FilledButton, {
-  Props as FilledButtonProps,
-} from '~/components/button/filled';
+import Button, { Props as ButtonProps } from '~/components/button';
 import Error from '~/components/error/';
 import LoginIcon from '~/components/icon/login/outline';
 import Request from '~/components/request';
 import { BaseError } from '~/errors';
 import { useEndpoint, UseEndpointReturn } from '~/hooks/endpoint';
+import { useTranslation } from '~/hooks/i18n';
 import Drawer, { useDrawer } from '~/portals/drawer';
 import Modal, { useModal } from '~/portals/modal';
 import { Authentication, AuthConfig, COLOR_SYSTEM, Endpoint } from '~/types/';
@@ -18,6 +17,7 @@ export type Props = {
   authentication: Authentication;
 };
 const Signin: React.FC<Props> = ({ endpoint, authentication }) => {
+  const { t } = useTranslation();
   const authConfigOAuth = useMemo<AuthConfig | null>(
     () => authentication.list.find((item) => item.type === 'oauth') || null,
     [authentication]
@@ -28,12 +28,12 @@ const Signin: React.FC<Props> = ({ endpoint, authentication }) => {
   );
 
   const drawerOAuth = useDrawer();
-  const handleOAuthClick = useCallback<FilledButtonProps['onClick']>(() => {
+  const handleOAuthClick = useCallback<ButtonProps['onClick']>(() => {
     drawerOAuth.open();
   }, [drawerOAuth]);
 
   const drawerEmail = useDrawer();
-  const handleEmailClick = useCallback<FilledButtonProps['onClick']>(() => {
+  const handleEmailClick = useCallback<ButtonProps['onClick']>(() => {
     drawerEmail.open();
   }, [drawerEmail]);
 
@@ -41,18 +41,22 @@ const Signin: React.FC<Props> = ({ endpoint, authentication }) => {
     <>
       <div className="flex items-center gap-2">
         {authConfigOAuth && (
-          <FilledButton
-            cs={COLOR_SYSTEM.PRIMARY}
-            Icon={LoginIcon}
-            label="OAuth"
+          <Button
+            variant="outlined"
+            className="grow max-w-50%"
+            on={COLOR_SYSTEM.BACKGROUND}
+            IconRight={LoginIcon}
+            label={t('oAuth')}
             onClick={handleOAuthClick}
           />
         )}
         {authConfigEmail && (
-          <FilledButton
-            cs={COLOR_SYSTEM.PRIMARY}
-            Icon={LoginIcon}
-            label="Email"
+          <Button
+            variant="outlined"
+            className="grow max-w-50%"
+            on={COLOR_SYSTEM.BACKGROUND}
+            IconRight={LoginIcon}
+            label={t('email')}
             onClick={handleEmailClick}
           />
         )}

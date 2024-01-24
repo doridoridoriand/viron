@@ -18,7 +18,7 @@ export const COLOR_SYSTEM = {
   SURFACE_VARIANT: 'surface-variant',
   BACKGROUND: 'background',
 } as const;
-export type ColorSystem = typeof COLOR_SYSTEM[keyof typeof COLOR_SYSTEM];
+export type ColorSystem = (typeof COLOR_SYSTEM)[keyof typeof COLOR_SYSTEM];
 
 export type JsonStringifiable = Parameters<typeof JSON.stringify>[0];
 export type URL = string;
@@ -31,6 +31,7 @@ export type EndpointGroup = {
   name: string;
   description?: string;
   priority?: number;
+  isOpen?: boolean;
 };
 
 export type EndpointID = string;

@@ -1,4 +1,3 @@
-import { navigate as _navigate } from 'gatsby';
 import _ from 'lodash';
 import { useCallback, useMemo, useRef } from 'react';
 import {
@@ -20,7 +19,9 @@ import {
   OASError,
   UnexpectedError,
   getHTTPError,
+  EndpointUndefinedError,
 } from '~/errors';
+import { useI18n } from '~/hooks/i18n';
 import { remove, KEY, set } from '~/storage';
 import {
   useEndpointListGlobalState,
@@ -28,6 +29,7 @@ import {
   useEndpointListUngroupedGlobalStateValue,
   useEndpointGroupListGlobalStateSet,
   useEndpointGroupListSortedGlobalStateValue,
+  useEndpointGroupListGlobalState,
 } from '~/store';
 import {
   Endpoint,
@@ -59,6 +61,7 @@ import {
 
 export type UseEndpointReturn = {
   list: Endpoint[];
+  setList: React.Dispatch<React.SetStateAction<Endpoint[]>>;
   listByGroup: {
     group: EndpointGroup;
     list: Endpoint[];
@@ -173,6 +176,17 @@ export type UseEndpointReturn = {
         error: null;
       }
   >;
+  editEndpoint: (
+    currentId: string,
+    endpoint: Endpoint,
+    options?: { resolveDuplication: boolean }
+  ) =>
+    | {
+        error: BaseError;
+      }
+    | {
+        error: null;
+      };
   removeEndpoint: (endpointId: EndpointID) => void;
   addGroup: (endpointGroup: EndpointGroup) => {
     error: EndpointGroupError | null;
@@ -203,6 +217,7 @@ export type UseEndpointReturn = {
   export: () => { error: BaseError | null };
 };
 export const useEndpoint = (): UseEndpointReturn => {
+  const { navigate: _navigate } = useI18n();
   const [endpointList, setEndpointList] = useEndpointListGlobalState();
   const setEndpointGroupList = useEndpointGroupListGlobalStateSet();
   const endpointListByGroup = useEndpointListByGroupGlobalStateValue();
@@ -357,6 +372,46 @@ export const useEndpoint = (): UseEndpointReturn => {
         }
       }
       setEndpointList((currVal) => [...currVal, _endpoint]);
+      return {
+        error: null,
+      };
+    },
+    [endpointList, setEndpointList]
+  );
+
+  const editEndpoint = useCallback<UseEndpointReturn['editEndpoint']>(
+    (
+      currentId,
+      endpoint,
+      { resolveDuplication } = { resolveDuplication: false }
+    ) => {
+      const index = endpointList.findIndex((item) => item.id === currentId);
+      if (index === -1) {
+        return {
+          error: new EndpointUndefinedError(),
+        };
+      }
+
+      if (
+        endpointList.some(
+          (item, idx) => item.id === endpoint.id && idx !== index
+        )
+      ) {
+        if (resolveDuplication) {
+          endpoint.id = `${endpoint.id}-${Math.random()}`;
+        } else {
+          return {
+            error: new EndpointDuplicatedError(),
+          };
+        }
+      }
+
+      setEndpointList((currVal) => [
+        ...currVal.slice(0, index),
+        endpoint,
+        ...currVal.slice(index + 1),
+      ]);
+
       return {
         error: null,
       };
@@ -878,6 +933,7 @@ export const useEndpoint = (): UseEndpointReturn => {
       listByGroup: endpointListByGroup,
       listUngrouped: endpointListUngrouped,
       groupList: endpointGroupList,
+      setList: setEndpointList,
       connect,
       fetchDocument,
       navigate,
@@ -886,6 +942,7 @@ export const useEndpoint = (): UseEndpointReturn => {
       prepareSigninOAuthCallback,
       prepareSignout,
       addEndpoint,
+      editEndpoint,
       removeEndpoint,
       addGroup,
       removeGroup,
@@ -899,6 +956,7 @@ export const useEndpoint = (): UseEndpointReturn => {
       endpointListByGroup,
       endpointListUngrouped,
       endpointGroupList,
+      setEndpointList,
       connect,
       fetchDocument,
       navigate,
@@ -907,6 +965,7 @@ export const useEndpoint = (): UseEndpointReturn => {
       prepareSigninOAuthCallback,
       prepareSignout,
       addEndpoint,
+      editEndpoint,
       removeEndpoint,
       addGroup,
       removeGroup,
@@ -917,4 +976,20 @@ export const useEndpoint = (): UseEndpointReturn => {
     ]
   );
   return ret;
+};
+
+export const useEndpointGroupToggle = (id: string) => {
+  const [endpointGroups, setEndpointGroups] = useEndpointGroupListGlobalState();
+  const endpointGroup = endpointGroups.find((group) => group.id === id);
+  const isOpen = endpointGroup?.isOpen ?? false;
+
+  const toggle = () => {
+    setEndpointGroups((groups) => {
+      return groups.map((group) => {
+        return group.id === id ? { ...group, isOpen: !isOpen } : group;
+      });
+    });
+  };
+
+  return { isOpen, toggle };
 };
